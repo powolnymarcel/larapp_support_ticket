@@ -66,13 +66,16 @@ class TicketsController extends Controller
 
     public function show($ticket_id)
     {
-        $ticket = Ticket::where('ticket_id', $ticket_id)->firstOrFail();
-
-        $comments = $ticket->comments;
-
-        $category = $ticket->category;
-
-        return view('tickets.show', compact('ticket', 'category', 'comments'));
+        $user=Auth::user();
+        if ($user->tickets()->where('user_id',  $user->id)->count() > 0){
+            $ticket = Ticket::where('ticket_id', $ticket_id)->firstOrFail();
+            $comments = $ticket->comments;
+            $category = $ticket->category;
+            return view('tickets.show', compact('ticket', 'category', 'comments'));
+        }
+        else{
+            return redirect('home');
+        }
     }
 
 
