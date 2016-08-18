@@ -18,3 +18,34 @@ Route::get('/', function () {
 Route::auth();
 
 Route::get('/home', 'HomeController@index');
+
+
+Route::get('new_ticket', 'TicketsController@create');
+Route::post('new_ticket', 'TicketsController@store');
+
+
+Route::get('my_tickets', 'TicketsController@userTickets');
+
+Route::get('tickets/{ticket_id}', 'TicketsController@show');
+Route::post('comment', 'CommentsController@postComment');
+
+
+
+Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function() {
+    Route::get('tickets', 'TicketsController@index');
+    Route::post('close_ticket/{ticket_id}', 'TicketsController@close');
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
